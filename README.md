@@ -17,4 +17,4 @@ We believe simplicity is relevant to all sizes of environments, so we design for
 
 Ansible manages machines in an agent-less manner. There is never a question of how to upgrade remote daemons or the problem of not being able to manage systems because daemons are uninstalled. Also, security exposure is greatly reduced because Ansible uses OpenSSH — the open source connectivity tool for remote login with the SSH (Secure Shell) protocol.
 
-Ansible is decentralized–it relies on your existing OS credentials to control access to remote machines. And if needed, Ansible can easily connect with Kerberos, LDAP, and other centralized authentication management systems.
+Ansible is decentralized–it relies on your existing OS credentials to control access to remote machines.
