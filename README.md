@@ -18,3 +18,12 @@ We believe simplicity is relevant to all sizes of environments, so we design for
 Ansible manages machines in an agent-less manner. There is never a question of how to upgrade remote daemons or the problem of not being able to manage systems because daemons are uninstalled. Also, security exposure is greatly reduced because Ansible uses OpenSSH — the open source connectivity tool for remote login with the SSH (Secure Shell) protocol.
 
 Ansible is decentralized–it relies on your existing OS credentials to control access to remote machines.
+
+## Multiple Tor Relays and MyFamily
+To avoid putting Tor clients at risk, when operating multiple relays you must set a proper MyFamily value and have a valid ContactInfo in your torrc configuration. The MyFamily setting is simply telling Tor clients what Tor relays are controlled by a single entity/operator/organization, so they are not used in multiple positions in a single circuit.
+
+If you run two relays and they have fingerprints AAAAAAAAAA and BBBBBBBB, you would add the following configuration to set MyFamily:
+
+`MyFamily AAAAAAAAAA,BBBBBBBB`
+
+Instead of doing so manually, big operators should automate the MyFamily setting via a configuration management solution. Manually managing MyFamily for big relay groups is error-prone and can put Tor clients at risk.
