@@ -1,4 +1,18 @@
 ---
+- name: Check for python3
+  raw: test -e /usr/bin/python3
+  changed_when: false
+  failed_when: false
+  register: check_python
+
+- block:
+    - name: Install python3 from apt
+      become: yes
+      raw: yum update && dnf install python3 -y
+    
+    - name: Test python3
+      raw: command -v python3
+  when: check_python.rc != 0
 
 - name: Ensure EPEL repo is installed (yum)
   become: yes
