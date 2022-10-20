@@ -9,3 +9,4 @@ tor_packages:
     - tor
     - tor-geoipdb
 tor_htpasswd_dependency: python3-passlib
+sudo_group: sudo
