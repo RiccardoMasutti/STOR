@@ -77,3 +77,10 @@
     state: reloaded
   with_items: "{{ tor_instances_tmp.results }}"
   when: ansible_system == 'OpenBSD'
+
+- name: restart sshd
+  become: yes
+  systemd:
+    name: sshd
+    state: restarted
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'RedHat'

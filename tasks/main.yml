@@ -176,3 +176,19 @@
   when: tor_gen_ciiss_proof_files
   tags:
     - always
+
+- name: Disable Root Login (first run only)
+  become: yes
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: "PermitRootLogin no"
+    state: present
+    backup: yes
+  notify:
+    - restart sshd
+  tags:
+   - debian
+   - centos
+   - fedora
+   - install
