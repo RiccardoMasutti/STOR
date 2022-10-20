@@ -176,3 +176,14 @@
   when: tor_gen_ciiss_proof_files
   tags:
     - always
+
+- name: Anti-DDoS configuration (debian-based OSes only)
+  import_tasks: anti-ddos.yml
+  when: tor_configure_anti_ddos
+  tags:
+   - debian
+   - install
+   #- centos
+   #- fedora
+   #- openbsd
+   #- freebsd

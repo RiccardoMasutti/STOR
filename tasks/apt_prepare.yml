@@ -1,5 +1,4 @@
 ---
-
 - name: Ensure lsb-release, apt-transport-https and gpg packages are installed
   become: yes
   apt:
@@ -8,6 +7,14 @@
     cache_valid_time: 86400
   notify:
     - re-gather facts
+
+- name: Ensure jq is installed for anti-ddos scripts
+  become: yes
+  apt:
+    name: jq
+    update_cache: "{{ tor_apt_update_cache }}"
+    cache_valid_time: 86400
+  when: tor_configure_anti_ddos
 
 - meta: flush_handlers
 
