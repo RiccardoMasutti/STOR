@@ -6,7 +6,7 @@
   register: check_python
 
 - block:
-    - name: Install python3 from apt
+    - name: Install python3 from dnf
       become: yes
       raw: yum update && dnf install python3 -y
     
