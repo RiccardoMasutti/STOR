@@ -179,7 +179,7 @@
 
 - name: Configure admin user
   become: true
-  include_tasks: "user_creation.yml"
+  import_tasks: "user_creation.yml"
   tags:
     - debian
     - fedora
