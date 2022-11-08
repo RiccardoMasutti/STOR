@@ -1,4 +1,15 @@
 ---
+- block:
+    - name: Install python3 from dnf
+      become: yes
+      raw: yum update && dnf install python3 -y
+    
+    - name: Test python3
+      raw: command -v python3
+  when: check_python.rc != 0
+
+- name: Gather facts
+  ansible.builtin.gather_facts:
 
 - name: Ensure EPEL repo is installed (yum)
   become: yes
