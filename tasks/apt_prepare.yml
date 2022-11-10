@@ -23,9 +23,13 @@
 - name: Ensure jq is installed for anti-ddos scripts
   become: yes
   apt:
-    name: jq
+    name: "{{ item }}"
     update_cache: "{{ tor_apt_update_cache }}"
     cache_valid_time: 86400
+  loop:
+    - jq
+    - ipset
+    - curl
   when: tor_configure_anti_ddos
 
 - meta: flush_handlers
