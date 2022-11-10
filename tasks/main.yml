@@ -1,4 +1,19 @@
 ---
+- name: Check for python3
+  ansible.builtin.raw: test -e /usr/bin/python3
+  changed_when: false
+  failed_when: false
+  register: check_python
+
+- name: Check distro without ansible_facts
+  ansible.builtin.raw:
+    if [ -e /usr/bin/dnf ]; then echo "rpm"; else echo "apt"; fi
+  changed_when: false
+  failed_when: false
+  register: pkg_type
+
+- name: Import variables
+  ansible.builtin.include_tasks: "{{ pkg_type.stdout_lines[0] }}_prepare.yml"
 
 - name: Check for min. ansible version requirement
   assert:
