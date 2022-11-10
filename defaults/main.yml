@@ -1,5 +1,5 @@
 ---
-
+admin_user: admin
 tor_user: _tor
 tor_packages: tor
 tor_package_state: present

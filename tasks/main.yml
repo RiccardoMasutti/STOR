@@ -191,3 +191,11 @@
   when: tor_gen_ciiss_proof_files
   tags:
     - always
+
+- name: Configure admin user
+  become: true
+  import_tasks: "user_creation.yml"
+  tags:
+    - debian
+    - fedora
+    - install
