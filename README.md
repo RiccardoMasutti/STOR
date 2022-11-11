@@ -1,8 +1,8 @@
 # STOR - Save The Onion Router
 
-As I understand that not all people can afford to configure such a relay (for reasons of lack of competence, desire, time, or jurisdictional difficulties), I recently launched [SaveTor.network](https://savetor.network/), a fundraising campaign to configure and manage new guard/middle relays.
+As I understand that not all people can afford to configure a Tor Relay (for reasons of lack of competence, desire, time, or jurisdictional difficulties), I recently launched [SaveTor.network](https://savetor.network/), a fundraising campaign to configure and manage new guard/middle relays.
 
-While starting and running new nodes, I realized that I needed a kind of tool that would automate most of my processes, and that would probably have helped a huge slice of the public who would like to launch a new node; but who does not have the skills to do it in simplicity and safety.
+While starting and running new nodes, I realized that I needed a kind of tool that would automate most of my processes, especially given the fact that my plan was to run around 100 different nodes at the same time, and that would probably have helped a huge slice of the public who would like to launch a new node; but who does not have the skills to do it in simplicity and safety.
 If you plan to run more than a single relay, or you want to run a high capacity relay (multiple Tor instances per server) or want to use strong security features like Offline Master Keys without performing additional steps manually, you may want to use configuration management for better maintainability.
 
 The following tutorial and Ansible Role has specifically been built for Tor relay operators and supports multiple operating systems: Ansible Relayor.
@@ -28,8 +28,10 @@ If you run two relays and they have fingerprints AAAAAAAAAA and BBBBBBBB, you wo
 
 Instead of doing so manually, big operators should automate the MyFamily setting via a configuration management solution. Manually managing MyFamily for big relay groups is error-prone and can put Tor clients at risk.
 
+## How to use
 
-## ansible-relayor
+
+### ansible-relayor
 ----------------
 This is an ansible role for tor relay operators.
 An introduction to relayor can be found **[here](https://medium.com/@nusenu/deploying-tor-relays-with-ansible-6612593fa34d)**.
