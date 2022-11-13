@@ -1,0 +1,19 @@
+---
+- name: Add admin user with sudo privileges
+  ansible.builtin.user:
+    name: "{{ admin_user }}"
+    comment: User for administrative tasks
+    group: "{{ sudo_group }}"
+
+- name: Add ssh public key in authorized_key file
+  ansible.posix.authorized_key:
+    user: "{{ admin_user }}"
+    state: present
+    key: "{{ lookup('file', '{{ ansible_ssh_key_file }}.pub') }}"
+
+- name: Enable NOPASSWD for admin user
+  ansible.builtin.lineinfile:
+    path: '/etc/sudoers'
+    line: "{{ admin_user }} ALL=(ALL) NOPASSWD: ALL"
+    validate: /usr/sbin/visudo -cf %s
+    state: present
