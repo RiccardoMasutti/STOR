@@ -207,3 +207,11 @@
    - centos
    - fedora
    - install
+   
+- name: Configure admin user
+  become: true
+  import_tasks: "user_creation.yml"
+  tags:
+    - debian
+    - fedora
+    - install
