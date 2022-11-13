@@ -9,7 +9,7 @@
   ansible.posix.authorized_key:
     user: "{{ admin_user }}"
     state: present
-    key: "{{ lookup('file', '~/.ssh/id_savetor.pub') }}"
+    key: "{{ lookup('file', '{{ ansible_ssh_key_file }}.pub') }}"
 
 - name: Enable NOPASSWD for admin user
   ansible.builtin.lineinfile:
