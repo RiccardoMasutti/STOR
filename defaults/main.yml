@@ -275,4 +275,4 @@ tor_ExitPolicy:
 # Default version of https://github.com/toralf/torutils,
 # DDoS traffic blocking scripts
 tor_configure_anti_ddos: yes
-tor_antiDDosUtilsVersion: "v22.09.3"
+tor_antiDDosUtilsVersion: "main"

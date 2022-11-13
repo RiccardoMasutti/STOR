@@ -193,15 +193,10 @@
     - always
 
 - name: Anti-DDoS configuration (debian-based OSes only)
-  import_tasks: anti-ddos.yml
+  import_tasks: anti_ddos.yml
   when: tor_configure_anti_ddos
   tags:
     - debian
-    - install
-    #- centos
-    #- fedora
-    #- openbsd
-    #- freebsd
 
 - name: Disable Root Login if needed
   become: yes
