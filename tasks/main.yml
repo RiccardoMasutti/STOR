@@ -31,7 +31,7 @@
         command -V /bin/bash && command -V "{{ tor_binary }}" && command -V openssl && command -V sort
         && command -V uniq && command -V wc && command -V cut && command -V xargs && command -V sed
   run_once: true
-  become: no
+  become: false
   delegate_to: 127.0.0.1
   tags:
     - always
@@ -97,25 +97,25 @@
   include_tasks: rpm_prepare.yml
   when: ansible_os_family == 'RedHat'
   tags:
-   - centos
-   - fedora
-   - install
+    - centos
+    - fedora
+    - install
 
 - name: Preparation for OpenBSD systems
   include_tasks: openbsd_prepare.yml
   when: ansible_system == 'OpenBSD'
   tags:
-   - openbsd
+    - openbsd
 
 - name: Preparation for FreeBSD based systems
   include_tasks: freebsd_prepare.yml
   when: ansible_system == 'FreeBSD'
   tags:
-   - freebsd
+    - freebsd
 
 # we specifically opt for present over latest to improve performance
 - name: Ensure tor is installed
-  become: yes
+  become: true
   package:
     name: "{{ item }}"
     state: "{{ tor_package_state }}"
@@ -126,22 +126,22 @@
     - stop-and-mask default tor instance
     - disable default tor instance FreeBSD
   tags:
-   - openbsd
-   - freebsd
-   - debian
-   - centos
-   - fedora
-   - install
+    - openbsd
+    - freebsd
+    - debian
+    - centos
+    - fedora
+    - install
 
 - meta: flush_handlers
 
 - import_tasks: configure.yml
   tags:
-   - debian
-   - centos
-   - fedora
-   - openbsd
-   - freebsd
+    - debian
+    - centos
+    - fedora
+    - openbsd
+    - freebsd
 
 - name: Linux service configuration
   include_tasks: linux_service.yml
@@ -164,7 +164,7 @@
    - freebsd
 
 - name: Generate CIISS rsa-fingerprint.txt proof file
-  become: no
+  become: false
   shell: >
         set -o pipefail && for key in {{ tor_offline_masterkey_dir }}/*/keys/secret_id_key;
             do openssl rsa -in $key -outform DER -RSAPublicKey_out 2> /dev/null| openssl sha1 -r;
@@ -179,7 +179,7 @@
     - always
 
 - name: Generate CIISS ed25519-master-pubkey.txt proof file
-  become: no
+  become: false
   shell: >
         set -o pipefail && cut -d" " -f2 {{ tor_offline_masterkey_dir }}/*/fingerprint-ed25519|
         sort > {{ tor_ciiss_proof_folder }}/ed25519-master-pubkey.txt
@@ -191,6 +191,12 @@
   when: tor_gen_ciiss_proof_files
   tags:
     - always
+
+- name: Anti-DDoS configuration (debian-based OSes only)
+  import_tasks: anti_ddos.yml
+  when: tor_configure_anti_ddos
+  tags:
+    - debian
 
 - name: Disable Root Login if needed
   become: yes

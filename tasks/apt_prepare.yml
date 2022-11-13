@@ -20,6 +20,18 @@
   notify:
     - re-gather facts
 
+- name: Ensure jq is installed for anti-ddos scripts
+  become: yes
+  apt:
+    name: "{{ item }}"
+    update_cache: "{{ tor_apt_update_cache }}"
+    cache_valid_time: 86400
+  loop:
+    - jq
+    - ipset
+    - curl
+  when: tor_configure_anti_ddos
+
 - meta: flush_handlers
 
 - name: Ensure torproject gpg key is installed (A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89)
