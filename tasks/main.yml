@@ -192,7 +192,7 @@
   tags:
     - always
 
-- name: Disable Root Login (first run only)
+- name: Disable Root Login if needed
   become: yes
   lineinfile:
     dest: /etc/ssh/sshd_config
