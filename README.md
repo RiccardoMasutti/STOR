@@ -19,6 +19,12 @@ Ansible manages machines in an agent-less manner. There is never a question of h
 
 Ansible is decentralized–it relies on your existing OS credentials to control access to remote machines.
 
+### STOR Ansible Role Automatic Features
+- Creates an admin user
+- Disables root account
+- Bootstraps Python
+- Adds Anti-DDoS firewall rules (based on [torutils](https://github.com/toralf/torutils))
+
 ## Multiple Tor Relays and MyFamily
 To avoid putting Tor clients at risk, when operating multiple relays you must set a proper MyFamily value and have a valid ContactInfo in your torrc configuration. The MyFamily setting is simply telling Tor clients what Tor relays are controlled by a single entity/operator/organization, so they are not used in multiple positions in a single circuit.
 
