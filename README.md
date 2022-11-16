@@ -19,11 +19,27 @@ Ansible manages machines in an agent-less manner. There is never a question of h
 
 Ansible is decentralized–it relies on your existing OS credentials to control access to remote machines.
 
-### STOR Ansible Role Automatic Features
-- Creates an admin user
-- Disables root account
-- Bootstraps Python
-- Adds Anti-DDoS firewall rules (based on [torutils](https://github.com/toralf/torutils))
+### Main benefits for a tor relay operator
+--------------------------------------
+- **automation** - no more manual setup tasks
+- creates an admin user
+- security: disables root account
+- bootstraps Python
+- availability: adds Anti-DDoS firewall rules (based on [torutils](https://github.com/toralf/torutils))
+- security: **[offline Ed25519 master keys](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/TorRelaySecurity/OfflineKeys)** are generated on the ansible host and are never exposed to the relay
+- **easy Ed25519 signing key renewal** (valid for 30 days by default - configurable)
+- security: compartmentalization: every tor instance is run with a distinct user
+- automatically makes use of IPv6 IPs (if available)
+- automatic tor instance generation (two by default - configurable)
+- enables tor's Sandbox feature by default on Debian-based systems
+- easily choose between alpha/non-alpha releases (Debian/Ubuntu/FreeBSD only)
+- easily restore a relay setup (the ansible host becomes a backup location for all keys out of the box)
+- easily choose between exit relay/non-exit relay mode using a single boolean
+- automatic deployment of a [tor exit notice html](https://gitweb.torproject.org/tor.git/plain/contrib/operator-tools/tor-exit-notice.html) page via tor's DirPort (on exits only)
+- **automatic MyFamily management**
+- prometheus scrape and nginx reverse proxy config autogeneration for tor's prometheus exporter (when enabled)
+- automatically generates prometheus blackbox-exporter scrape configuration to monitor reachability of ORPorts and DirPorts (when enabled)
+
 
 ## Multiple Tor Relays and MyFamily
 To avoid putting Tor clients at risk, when operating multiple relays you must set a proper MyFamily value and have a valid ContactInfo in your torrc configuration. The MyFamily setting is simply telling Tor clients what Tor relays are controlled by a single entity/operator/organization, so they are not used in multiple positions in a single circuit.
@@ -62,23 +78,6 @@ The Tor Relay Guide contains instructions on how to enable automatic software up
 and [FreeBSD](https://community.torproject.org/relay/setup/guard/freebsd/updates/).
 
 This ansible role does not aim to support tor bridges.
-
-Main benefits for a tor relay operator
---------------------------------------
-- **automation** - no more manual setup tasks
-- security: **[offline Ed25519 master keys](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/TorRelaySecurity/OfflineKeys)** are generated on the ansible host and are never exposed to the relay
-- **easy Ed25519 signing key renewal** (valid for 30 days by default - configurable)
-- security: compartmentalization: every tor instance is run with a distinct user
-- automatically makes use of IPv6 IPs (if available)
-- automatic tor instance generation (two by default - configurable)
-- enables tor's Sandbox feature by default on Debian-based systems
-- easily choose between alpha/non-alpha releases (Debian/Ubuntu/FreeBSD only)
-- easily restore a relay setup (the ansible host becomes a backup location for all keys out of the box)
-- easily choose between exit relay/non-exit relay mode using a single boolean
-- automatic deployment of a [tor exit notice html](https://gitweb.torproject.org/tor.git/plain/contrib/operator-tools/tor-exit-notice.html) page via tor's DirPort (on exits only)
-- **automatic MyFamily management**
-- prometheus scrape and nginx reverse proxy config autogeneration for tor's prometheus exporter (when enabled)
-- automatically generates prometheus blackbox-exporter scrape configuration to monitor reachability of ORPorts and DirPorts (when enabled)
 
 Installation
 ------------
