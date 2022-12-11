@@ -1,10 +1,20 @@
 ---
-- name: Copy anti-ddos script
+- name: Copy anti-ddos ipv4 script
   ansible.builtin.copy:
     src: files/ipv4-rules.sh
     dest: /tmp/ipv4-rules.sh
     mode: '0500'
 
-- name: run anti-ddos script
+- name: Copy anti-ddos ipv6 script
+  ansible.builtin.copy:
+    src: files/ipv6-rules.sh
+    dest: /tmp/ipv6-rules.sh
+    mode: '0500'
+
+- name: run anti-ddos ipv4 script
   become: yes
   shell: /tmp/ipv4-rules.sh start
+
+- name: run anti-ddos script
+  become: yes
+  shell: /tmp/ipv6-rules.sh start
