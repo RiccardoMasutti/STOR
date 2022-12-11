@@ -1,13 +1,10 @@
 ---
-- name: download anti-ddos script
-  get_url:
-    url: "https://raw.githubusercontent.com/toralf/torutils/{{ tor_antiDDosUtilsVersion }}/ipv4-rules.sh"
+- name: Copy anti-ddos script
+  ansible.builtin.copy:
+    src: files/ipv4-rules.sh
     dest: /tmp/ipv4-rules.sh
     mode: '0500'
 
 - name: run anti-ddos script
   become: yes
   shell: /tmp/ipv4-rules.sh start
-
-
-
