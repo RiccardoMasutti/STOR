@@ -198,26 +198,4 @@
   tags:
     - debian
 
-- name: Disable Root Login if needed
-  become: yes
-  lineinfile:
-    dest: /etc/ssh/sshd_config
-    regexp: '^PermitRootLogin'
-    line: "PermitRootLogin no"
-    state: present
-    backup: yes
-  notify:
-    - restart sshd
-  tags:
-   - debian
-   - centos
-   - fedora
-   - install
    
-- name: Configure admin user
-  become: true
-  import_tasks: "user_creation.yml"
-  tags:
-    - debian
-    - fedora
-    - install
