@@ -7,12 +7,6 @@ driver:
 platforms:
   - name: debian-11
   - name: ubuntu-22.04
-    driver:
-      box: ubuntu/jammy64
-      provision: True
-      vagrantfiles:
-        # temporary workaround for hashicorp/vagrant/pull/12584
-        - test/vagrant_provisions/vagrant_provision_ssh_PubkeyAcceptedAlgorithms.rb
   - name: freebsd-13
     driver:
       provision: True
@@ -20,6 +14,7 @@ platforms:
         - test/vagrant_provisions/freebsd_vagrant_provision.rb
   - name: freebsd-12
     driver:
+      box: roboxes/freebsd12
       provision: True
       vagrantfiles:
         - test/vagrant_provisions/freebsd_vagrant_provision.rb
@@ -50,12 +45,34 @@ suites:
   - name: t-guard-alpha
     provisioner:
       playbook: "test/integration/default/guard-alpha-node.yml"
+    excludes:
+      - freebsd-13
+      - freebsd-12
+      - openbsd7
   - name: t-guard-nightly
     provisioner:
       playbook: "test/integration/default/guard-nightly-node.yml"
+    excludes:
+      - freebsd-13
+      - freebsd-12
+      - openbsd7
+  - name: t-guard-metricsport-blackbox-exporter
+    provisioner:
+      playbook: "test/integration/default/guard-metricsport-blackbox.yml"
   - name: t-guard-alpha-metricsport-blackbox-exporter
     provisioner:
       playbook: "test/integration/default/guard-alpha-metricsport-blackbox.yml"
+    excludes:
+      - freebsd-13
+      - freebsd-12
+      - openbsd7
+  - name: t-guard-nightly-metricsport-blackbox-exporter
+    provisioner:
+      playbook: "test/integration/default/guard-nightly-metricsport-blackbox.yml"
+    excludes:
+      - freebsd-13
+      - freebsd-12
+      - openbsd7
   - name: t-guard-blackbox-exporter
     provisioner:
       playbook: "test/integration/default/guard-blackbox-exporter.yml"
@@ -99,7 +116,7 @@ suites:
       - ["private_network", {ip: "198.51.100.14"}]
     provisioner:
       playbook: "test/integration/default/6publicIPs-dedicatedExitIP-2instPerIP-exit-node.yml"
-  - name: t-exit-dirport0-6publicIPs-dedicatedExitIP-2instPerIP
+  - name: t-exit-dirport0-6IPs-dedicatedExitIP-2PerIP
     driver:
       network:
       - ["private_network", {ip: "192.0.2.10"}]
